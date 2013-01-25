@@ -79767,18 +79767,6 @@ if (typeof exports !== 'undefined') {
 
 });
 
-require.define("/node_modules/painterly-textures/package.json",function(require,module,exports,__dirname,__filename,process,global){module.exports = {"main":"painterly.js"}
-});
-
-require.define("/node_modules/painterly-textures/painterly.js",function(require,module,exports,__dirname,__filename,process,global){var path = require('path')
-var texturePath = __dirname + '/textures'
-
-module.exports = function(dir) {
-  return path.relative(dir, texturePath) + '/'
-}
-
-});
-
 require.define("/package.json",function(require,module,exports,__dirname,__filename,process,global){module.exports = {}
 });
 
@@ -81064,14 +81052,12 @@ require.define("/node_modules/underscore/underscore.js",function(require,module,
 });
 
 require.define("/demo.js",function(require,module,exports,__dirname,__filename,process,global){var createGame = require('voxel-engine')
-var texturePath = require('painterly-textures')(__dirname)
 var highlight = require('./')
 
 var container = document.querySelector('#container')
 
 var game = createGame({
-  startingPosition: [0, 1000, 0],
-  texturePath: texturePath
+  startingPosition: [0, 1000, 0]
 })
 
 
