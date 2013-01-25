@@ -1,0 +1,21 @@
+{
+  "name": "voxel-highlight",
+  "description": "highlight or manipulate with the voxel that the player is currently looking at",
+  "version": "0.0.1",
+  "repository": {
+    "type":"git",
+    "url": "git@github.com:maxogden/voxel-highlighter.git"
+  },
+  "dependencies": {
+    "underscore": "1.4.3",
+    "inherits": "1.0.0"
+  },
+  "devDependencies": {
+    "voxel-engine": "0.3.6",
+    "browservefy": "0.0.1",
+    "painterly-textures": "git://github.com/maxogden/painterly-textures.git#relative"
+  },
+  "scripts": {
+    "start": "echo \"open localhost:8080/\" && ./node_modules/.bin/browservefy demo.js 8080 -- -d"
+  }
+}
