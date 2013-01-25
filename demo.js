@@ -1,12 +1,10 @@
 var createGame = require('voxel-engine')
-var texturePath = require('painterly-textures')(__dirname)
 var highlight = require('./')
 
 var container = document.querySelector('#container')
 
 var game = createGame({
-  startingPosition: [0, 1000, 0],
-  texturePath: texturePath
+  startingPosition: [0, 1000, 0]
 })
 
 
