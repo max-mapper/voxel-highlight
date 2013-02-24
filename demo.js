@@ -1,6 +1,6 @@
 var createGame = require('voxel-engine')
 var texturePath = require('painterly-textures')(__dirname)
-var highlight = require('./')
+var highlighter = require('./')
 
 var container = document.querySelector('#container')
 
@@ -9,13 +9,22 @@ var game = createGame({
   texturePath: texturePath
 })
 
-
-window.game = game // for debugging
 game.controls.pitchObject.rotation.x = -1.5 // look down
 game.appendTo(container)
 game.currentMaterial = 1
 
-highlight(game)
+var highlight = highlighter(game, {
+  distance: 100,
+  wireframeLinewidth: 10,
+})
+
+highlight.on('highlight', function(position, mesh, vidx) {
+  console.log('highlighted voxel: ' + vidx)
+})
+
+highlight.on('remove', function(mesh, vidx) {
+  console.log('UN-highlighted voxel: ' + vidx)
+})
 
 game.on('mousedown', function (pos) {
   if (game.erase) game.setBlock(pos, 0)
