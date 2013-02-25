@@ -15,9 +15,11 @@ function Highlighter(game, opts) {
   var size = this.game.cubeSize
   var geometry = this.opts.geometry || new this.game.THREE.CubeGeometry(size + 0.01, size + 0.01, size + 0.01)
   var material = this.opts.material || new this.game.THREE.MeshBasicMaterial({
-    color: new this.game.THREE.Color(0x000000),
+    color: 0x000000,
     wireframe: true,
-    wireframeLinewidth: this.opts.wireframeLinewidth || 3
+    wireframeLinewidth: this.opts.wireframeLinewidth || 3,
+    transparent: true, 
+    opacity: this.opts.wireframeOpacity || 0.5
   })
   this.cube = new this.game.THREE.Mesh(geometry, material)
   this.highlightActive = false
