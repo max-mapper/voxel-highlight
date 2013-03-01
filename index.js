@@ -48,14 +48,13 @@ Highlighter.prototype.highlight = function () {
     }
     return // no highlight, done with common case
   }
-  // select which voxel to highlight (within current chunk)
-  var voxelVector = this.game.voxels.voxelVector(hit)
-  var newVoxelIdx = this.game.voxels.voxelIndex(voxelVector)
+  // update position of highlight mesh if changed
+  hit.set(Math.floor(hit.x) + 0.5, Math.floor(hit.y) + 0.5, Math.floor(hit.z) + 0.5)
+  var newVoxelIdx = JSON.stringify(hit)
   if (newVoxelIdx === this.currVoxelIdx) {
     return // voxel already highlighted, done with common case
   }
-  // update position of highlight mesh (now assuming block size of 1)
-  this.mesh.position.set(Math.floor(hit.x) + 0.5, Math.floor(hit.y) + 0.5, Math.floor(hit.z) + 0.5)
+  this.mesh.position.copy(hit)
 
   if (this.currVoxelIdx) {
     this.emit('remove', this.mesh, this.currVoxelIdx) // moved highlight
