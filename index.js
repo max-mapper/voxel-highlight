@@ -31,13 +31,18 @@ Highlighter.prototype.highlight = function () {
   var stepDistance = 0.1
   var distanceChecked = 0
   var maxDistance = this.opts.distance || 10
-  this.stepPosition.copy(this.game.cameraPosition())
-  this.stepSegment.copy(this.game.cameraVector()).multiplyScalar(stepDistance)
+  var cp = this.game.cameraPosition()
+  var cv = this.game.cameraVector()
+  var cpVector3 = new this.game.THREE.Vector3(cp[0], cp[1], cp[2])
+  var cvVector3 = new this.game.THREE.Vector3(cv[0], cv[1], cv[2])
+  this.stepPosition.copy(cpVector3)
+  this.stepSegment.copy(cvVector3).multiplyScalar(stepDistance)
   while (distanceChecked < maxDistance && !hit) {
     distanceChecked += stepDistance
     this.stepPosition.addSelf(this.stepSegment)
-    if (this.game.voxels.voxelAtPosition(this.stepPosition)) {
-      var hit = this.stepPosition
+    var sp = this.stepPosition
+    if (this.game.voxels.voxelAtPosition([sp.x, sp.y, sp.z])) {
+      var hit = sp
     }
   }
   if (!hit) {
