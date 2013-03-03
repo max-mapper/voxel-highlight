@@ -9,7 +9,7 @@ module.exports = function (game, opts) {
 function Highlighter(game, opts) {
   this.opts = opts || {}
   this.game = game
-  this.prevVoxelIdx = 0
+  this.prevPosition = null
   this.cameraPosition = new this.game.THREE.Vector3()
   this.cameraVector = new this.game.THREE.Vector3()
   var size = this.game.cubeSize
@@ -32,7 +32,7 @@ Highlighter.prototype.highlight = function () {
   var self = this
   var removeHighlight = function () {
     self.game.scene.remove(self.cube)
-    self.emit('remove', self.cube, self.prevVoxelIdx)
+    self.emit('remove', self.cube, self.prevPosition)
     self.highlightActive = false
   }
   var getCameraPosition = function () { // only for legacy voxel-engine 0.3.6 support
@@ -54,24 +54,16 @@ Highlighter.prototype.highlight = function () {
     if (this.highlightActive) removeHighlight()
     return
   }
-  var voxelVector = this.game.voxels.voxelVector(hit)
-  var voxelIdx = this.game.voxels.voxelIndex(voxelVector)
+  var pos = this.game.blockPosition(hit.position)
   if (this.highlightActive) {
-    if (this.prevVoxelIdx === voxelIdx) return // no change
+    if (this.prevPosition[0] == pos[0] &&
+        this.prevPosition[1] == pos[1]
+        this.prevPosition[2] == pos[2]) return // no change
     removeHighlight()
   }
-  this.prevVoxelIdx = voxelIdx
-  var chunk = this.game.voxels.chunkAtPosition(hit)
-  var pos = this.game.voxels.getBounds(chunk[0], chunk[1], chunk[2])[0]
-  var size = this.game.cubeSize
-  pos[0] = pos[0] * size
-  pos[1] = pos[1] * size
-  pos[2] = pos[2] * size
-  pos[0] += voxelVector.x * size
-  pos[1] += voxelVector.y * size
-  pos[2] += voxelVector.z * size
+  this.prevPosition = position
   this.cube.position.set(pos[0] + size / 2, pos[1] + size / 2, pos[2] + size / 2)
   this.game.scene.add(this.cube)
   this.highlightActive = true
-  this.emit('highlight', pos, this.cube, voxelIdx)
+  this.emit('highlight', pos, this.cube)
 }
