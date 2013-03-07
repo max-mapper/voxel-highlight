@@ -39,7 +39,7 @@ options can be:
 }
 ```
 
-### highlighter.on('highlight', voxelPosArray) {})
+### highlighter.on('highlight', function(voxelPosArray) {})
 
 gets called when highlighter highlights something
 
