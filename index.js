@@ -31,28 +31,23 @@ Highlighter.prototype.highlight = function () {
   if (!hit) {
     if (this.currVoxelPos) { // remove existing highlight
       this.game.scene.remove(this.mesh)
-      this.emit('remove', this.mesh, this.currVoxelPos)
+      this.emit('remove', this.currVoxelPos)
       this.currVoxelPos = undefined // can't use 0 since there could be a voxel there
     }
     return // no highlight, done with common case
   }
-  hit.position[0] = Math.floor(hit.position[0]) + 0.5
-  hit.position[1] = Math.floor(hit.position[1]) + 0.5
-  hit.position[2] = Math.floor(hit.position[2]) + 0.5
-
-  //var newVoxelPos = this.game.blockPosition(hit.position) // coming soon
-  var newVoxelPos = hit.position.join("|")
-  if (newVoxelPos === this.currVoxelPos) {
+  var newVoxelPos = this.game.blockPosition(hit.position)
+  if (this.currVoxelPos && newVoxelPos[0] === this.currVoxelPos[0] && newVoxelPos[1] === this.currVoxelPos[1] && newVoxelPos[2] === this.currVoxelPos[2]) {
     return // voxel already highlighted, done with common case
   }
-  this.mesh.position.set(hit.position[0], hit.position[1], hit.position[2])
+  this.mesh.position.set(newVoxelPos[0] + 0.5, newVoxelPos[1] + 0.5, newVoxelPos[2] + 0.5)
 
   if (this.currVoxelPos) {
-    this.emit('remove', this.mesh, this.currVoxelPos) // moved highlight
+    this.emit('remove', this.currVoxelPos) // moved highlight
   }
   else {
     this.game.scene.add(this.mesh) // fresh highlight
   }
-  this.emit('highlight', this.mesh, newVoxelPos)
+  this.emit('highlight', newVoxelPos)
   this.currVoxelPos = newVoxelPos
 }

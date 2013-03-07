@@ -13,9 +13,14 @@ or just add to the package.json file of your voxel-engine project
 ```javascript
 var highlight = require('voxel-highlight')
 var highlighter = highlight(game)
-highlighter.on('highlight', function (position, mesh, voxelIndex) {
-  console.log('highlighted voxel: ' + voxelIndex)
+highlighter.on('highlight', function (voxelPosArray) {
+  console.log('highlighted voxel: ' + voxelPosArray)
 })
+```
+or using as constructor:
+```javascript
+var Highlight = require('voxel-highlight')
+var highlighter = new Highlight(game)
 ```
 
 ### highlight(gameInstance, optionalOptions)
@@ -34,11 +39,11 @@ options can be:
 }
 ```
 
-### highlight.on('highlight', mesh, voxelIndex) {})
+### highlighter.on('highlight', voxelPosArray) {})
 
 gets called when highlighter highlights something
 
-### highlight.on('remove', function(mesh, voxelIndex) {})
+### highlighter.on('remove', function(voxelPosArray) {})
 
 gets called when highlighter unhighlights something
 
