@@ -1,6 +1,7 @@
 # voxel-highlight
 
-highlight or manipulate with the voxel that the player is currently looking at
+highlight the voxel the player is currently looking at, along with the
+adjacent voxel (where a block would be placed) when the control key is down
 
 ```
 npm install voxel-highlight
@@ -41,15 +42,23 @@ options can be:
 
 ### highlighter.on('highlight', function(voxelPosArray) {})
 
-gets called when highlighter highlights something
+called when a voxel is highlighted
 
 ### highlighter.on('remove', function(voxelPosArray) {})
 
-gets called when highlighter unhighlights something
+called when a voxel is un-highlighted
+
+### highlighter.on('highlight-adjacent', function(voxelPosArray) {})
+
+called when an adjacent voxel is highlighted
+
+### highlighter.on('remove-adjacent', function(voxelPosArray) {})
+
+called when an adjacent voxel is un-highlighted
 
 # Get the demo running on your machine
 
-look at [voxel-hello-world](http://github.com/maxogden/voxel-hello-world) for demo usage
+check out [voxel-hello-world](http://github.com/maxogden/voxel-hello-world) for demo usage
 
 ## license
 
