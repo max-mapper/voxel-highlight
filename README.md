@@ -37,6 +37,8 @@ options can be:
   wireframeLinewidth: if using default material wireframe, default is 3
   wireframeOpacity: if using default material wireframe, default is 0.5
   color: highlight cube color, default is 0x000000
+  adjacentAnimate: animate movement of highlight cube to/from adjacent position
+  adjacentActive: function to toggle adjacent highlight, default is { return game.controls.state.alt }
 }
 ```
 
