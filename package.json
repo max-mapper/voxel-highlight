@@ -1,13 +1,13 @@
 {
   "name": "voxel-highlight",
   "description": "highlight or manipulate the voxel the player is looking at",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": {
     "type":"git",
     "url": "git@github.com:maxogden/voxel-highlight.git"
   },
   "dependencies": {
-    "underscore": "1.4.3",
+    "underscore": "1.4.4",
     "inherits": "1.0.0"
   },
   "peerDependencies": {
