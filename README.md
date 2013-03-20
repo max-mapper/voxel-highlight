@@ -24,6 +24,8 @@ var Highlight = require('voxel-highlight')
 var highlighter = new Highlight(game)
 ```
 
+## api and usage
+
 ### highlight(gameInstance, optionalOptions)
 
 options can be:
@@ -37,10 +39,32 @@ options can be:
   wireframeLinewidth: if using default material wireframe, default is 3
   wireframeOpacity: if using default material wireframe, default is 0.5
   color: highlight cube color, default is 0x000000
-  adjacentAnimate: animate movement of highlight cube to/from adjacent position
+  animate: animate movement of highlight cuboid, default is false
   adjacentActive: function to toggle adjacent highlight, default is { return game.controls.state.alt }
+  selectActive: function to toggle adjacent highlight, default is { return game.controls.state.select }
+  animateFunction: function to ease position changes, see default below
 }
 ```
+
+Default animation function:
+```javascript
+  opts.animateFunction = function (position, targetPosition, deltaTime) {
+    if (!position || !targetPosition || !deltaTime) return;
+    var rate = 10 // speed in voxels per second
+    if (Math.abs(targetPosition[0] - position.x) < 0.05
+     && Math.abs(targetPosition[1] - position.y) < 0.05
+     && Math.abs(targetPosition[2] - position.z) < 0.05) {
+      position.set(targetPosition[0], targetPosition[1], targetPosition[2])
+      return; // close enough to snap and be done
+    }
+    deltaTime = deltaTime / 1000 // usually around .016 seconds (60 FPS)
+    position.x += rate * deltaTime * (targetPosition[0] - position.x)
+    position.y += rate * deltaTime * (targetPosition[1] - position.y)
+    position.z += rate * deltaTime * (targetPosition[2] - position.z)
+  }
+```
+
+## events
 
 ### highlighter.on('highlight', function(voxelPosArray) {})
 
@@ -57,6 +81,14 @@ called when an adjacent voxel is highlighted
 ### highlighter.on('remove-adjacent', function(voxelPosArray) {})
 
 called when an adjacent voxel is un-highlighted
+
+### highlighter.on('highlight-select', funnction(selectionBounds) {}
+
+called when a selection of more than one voxel is highlighted. selectionBounds has .start and .end position arrays
+
+### highlighter.on('highlight-deselect', funnction(selectionBounds) {}
+
+called when a selection of more than one voxel is no longer highlighted. selectionBounds has .start and .end position arrays
 
 # Get the demo running on your machine
 
