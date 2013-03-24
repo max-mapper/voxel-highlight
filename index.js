@@ -82,6 +82,7 @@ Highlighter.prototype.highlight = function () {
     this.emit('remove', this.currVoxelPos.slice())
     this.currVoxelPos = undefined
     removeAdjacent(this)
+    return;
   }
 
   var newVoxelPos = hit.voxel
