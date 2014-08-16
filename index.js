@@ -8,6 +8,7 @@ function Highlighter(game, opts) {
   if (!(this instanceof Highlighter)) return new Highlighter(game, opts)
   this.game = game
   opts = opts || {}
+  this.enabled = opts.enabled || function () { return true }
   var geometry = this.geometry = opts.geometry || new game.THREE.CubeGeometry(1, 1, 1)
   var material = opts.material || new game.THREE.MeshBasicMaterial({
     color: opts.color || 0x000000,
@@ -63,6 +64,13 @@ function Highlighter(game, opts) {
 inherits(Highlighter, events.EventEmitter)
 
 Highlighter.prototype.highlight = function () {
+
+  if (!this.enabled()) {
+    if (this.mesh.parent !== null) {
+      this.game.scene.remove(this.mesh)
+    }
+    return;
+  }
 
   var cp = this.game.cameraPosition()
   var cv = this.game.cameraVector()
